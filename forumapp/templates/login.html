@@ -13,21 +13,13 @@
         <div id='header'>
             <a href="/"><img src="{% static 'img/logo.png' %}" alt="Troop 44" /></a>
             <img id="mypic" src="{% static 'img/panzer.jpg' %}" alt="my-photo" />
-            <div class="form_box">
-                {% if user.id != None %}
-                <p>Welcome {{user.first_name}} {{user.last_name}}!</p>
-                <a href="/update/{{user.id}}">Edit my Account</a>
-                <form action="/logout" method='POST'>
-                    {% csrf_token %}
-                        <input type="submit" value="logout">             
-                </form>   
-    
-                {% else %}
+            <div id='registration'>
+                
                 <p>
-                    <a href="/login">Login</a>
                     <a href="/register">Register</a>
                 </p>
-                {% endif %}  
+                
+    
             </div>
         </div>
 
@@ -35,13 +27,31 @@
             <p><a href="/events">Events</a></p>
             <p><a href="/about">About</a></p>
             <p><a href="/location">Location</a></p>
+            <p><a href="/gallery">Gallery</a></p>
             <p>Join?</p>
-
         </div>
 
+        
+
         <div id='mainbody'>
-            <p>Here is a gallery of Pictures showing the troop.
-            </p>
+            {% if messages %}
+            {% for message in messages  %}
+                <p>{{message}}</p>
+            {% endfor %}
+            {% endif %}
+            <div class="form_box">
+                <h1>Login</h1>
+                <form action="/login_action" method='POST'>
+                    {% csrf_token %}
+
+                        <label for="email">E-Mail</label>
+                        <input type="text" name='email' id="email" />
+                        <label for="pword">Password</label>
+                        <input type="password" name='pword' id="pword" />
+                        <input type="submit" value="login">
+                    
+                </form>
+            </div>
         </div>
 
         <div id='footer'>

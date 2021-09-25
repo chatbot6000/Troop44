@@ -16,6 +16,7 @@
             <div class="form_box">
                 {% if user.id != None %}
                 <p>Welcome {{user.first_name}} {{user.last_name}}!</p>
+                <p>Value of user variable is {{user.id}}</p>
                 <a href="/update/{{user.id}}">Edit my Account</a>
                 <form action="/logout" method='POST'>
                     {% csrf_token %}
@@ -26,6 +27,7 @@
                 <p>
                     <a href="/login">Login</a>
                     <a href="/register">Register</a>
+                    <p>Value of user variable is {{user.id}}</p>
                 </p>
                 {% endif %}  
             </div>
@@ -34,13 +36,12 @@
         <div id='navbar'>
             <p><a href="/events">Events</a></p>
             <p><a href="/about">About</a></p>
-            <p><a href="/location">Location</a></p>
+            <p><a href="/gallery">Gallery</a></p>
             <p>Join?</p>
-
         </div>
 
         <div id='mainbody'>
-            <p>Here is a gallery of Pictures showing the troop.
+            <p>map goes here.
             </p>
         </div>
 

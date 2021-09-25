@@ -3,22 +3,38 @@
 <head>
     <title>Troop 44</title>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta name="description" content="This is Django Template" >
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">  
 </head>
 
 <body>
     <div id='wrapper'>
         <div id='header'>
-            <a href=index.html><img src="img/logo.png" alt="Troop 44" /></a>
-            <img id="mypic" src="img/panzer.jpg" alt="my-photo" />
+            <a href="/"><img src="{% static 'img/logo.png' %}" alt="Troop 44" /></a>
+            <img id="mypic" src="{% static 'img/panzer.jpg' %}" alt="my-photo" />
+            <div class="form_box">
+                {% if user.id != None %}
+                <p>Welcome {{user.first_name}} {{user.last_name}}!</p>
+                <a href="/update/{{user.id}}">Edit my Account</a>
+                <form action="/logout" method='POST'>
+                    {% csrf_token %}
+                        <input type="submit" value="logout">             
+                </form>   
+    
+                {% else %}
+                <p>
+                    <a href="/login">Login</a>
+                    <a href="/register">Register</a>
+                </p>
+                {% endif %}  
+            </div>
         </div>
 
         <div id='navbar'>
-            <p><a href=events.html>Events</a></p>
-            <p><a href=patrols.html>Patrols</a></p>
-            <p><a href=leadership.html>Leadership</a></p>
-            <p><a href=gallery.html>Gallery</a></p>
+            <p><a href="/about">About</a></p>
+            <p><a href="/location">Location</a></p>
+            <p><a href="/gallery">Gallery</a></p>
             <p>Join?</p>
         </div>
 

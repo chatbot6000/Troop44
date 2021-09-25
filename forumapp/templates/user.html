@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        
+        <title>User Quotes</title>
+        <meta name="description" content="This is Django Template" >
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">   
+        
+    </head>
+    <body> 
+        <div id='header'>
+            <a href="/"><img src="{% static 'img/logo.png' %}" alt="Troop 44" /></a>
+            <img id="mypic" src="{% static 'img/panzer.jpg' %}" alt="my-photo" />
+            <div class="form_box">
+                {% if userid.id != None %}
+                <p>Welcome {{userid.first_name}} {{userid.last_name}}!</p>
+                <a href="/update/{{userid.id}}">Edit my Account</a>
+                <form action="/logout" method='POST'>
+                    {% csrf_token %}
+                        <input type="submit" value="logout">             
+                </form>   
+    
+                {% else %}
+                <p>You should never see this</p>
+                {% endif %}  
+            </div>
+        </div>
+        
+        <h1>All quotes by {{username.first_name}} {{username.last_name}}</h1> 
+        
+            {% if allposts %}
+            {% for post in allposts %}
+            <div class="box1">           
+                {{ post.text }}
+                <br>{{post.likes.count}} people like this
+            </div>
+            <br>
+            {% endfor %}
+            {% endif %}
+
+    </body>
+</html>

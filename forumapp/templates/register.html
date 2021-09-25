@@ -13,10 +13,10 @@
         <div id='header'>
             <a href="/"><img src="{% static 'img/logo.png' %}" alt="Troop 44" /></a>
             <img id="mypic" src="{% static 'img/panzer.jpg' %}" alt="my-photo" />
-            <div class="form_box">
-                {% if user.id != None %}
-                <p>Welcome {{user.first_name}} {{user.last_name}}!</p>
-                <a href="/update/{{user.id}}">Edit my Account</a>
+            <div id='registration'>
+                {% if allusers %}
+                <p>Welcome {{username.firstname}} {{username.lastname}}!</p>
+                <a href="/update/{{username.id}}">Edit my Account</a>
                 <form action="/logout" method='POST'>
                     {% csrf_token %}
                         <input type="submit" value="logout">             
@@ -27,7 +27,8 @@
                     <a href="/login">Login</a>
                     <a href="/register">Register</a>
                 </p>
-                {% endif %}  
+                {% endif %}
+    
             </div>
         </div>
 
@@ -42,26 +43,30 @@
         
 
         <div id='mainbody'>
-            <p>Just before I go to sleep
-                I hear a church bell ring
-                Merry Christmas everyone
-                Is the song it sings
-                So I say a silent prayer
-                For creatures great and small
-                Peace on Earth, good will to men
-                Is the greatest gift of all.
-            </p>
-            <br>
-            {% if user.id != None  %}
-                <p>Private content goes here!</p>
-                <p>You can see private content</p>
-                <p><a href="/posts">Troop 44 Comments & Suggestions</a></p>
+            {% if messages %}
+            {% for message in messages  %}
+                <p>{{message}}</p>
+            {% endfor %}
+            {% endif %}
+            <div class="form_box">
+                <h1>Register</h1>
+                <form action="/register_action" method='POST'>
+                    {% csrf_token %}
+
+                        <label for="fname">First Name</label>
+                        <input type="text" name='fname' id="fname" />
+                        <label for="lname">Last Name</label>
+                        <input type="text" name='lname' id="lname" />
+                        <label for="email">E-Mail</label>
+                        <input type="text" name='email' id="email" />
+                        <label for="pword">Password</label>
+                        <input type="password" name='pword' id="pword" />
+                        <label for="cpword">Confirm PW</label>
+                        <input type="password" name='cpword' id="cpword" />
+                        <input type="submit" value="register">
                     
-                {% else %}
-                <p>You would see private content here if you were logged in</p>
-                {% endif %}
-
-
+                </form>
+            </div>
         </div>
 
         <div id='footer'>

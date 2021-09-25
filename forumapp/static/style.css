@@ -79,6 +79,13 @@
 
 }
 
+.form_box{
+    display: flex;
+    flex-direction: column;
+    width: 180px;
+    padding: 20px;
+    margin: 20px;
+}
 
 .box2{
     display: inline;

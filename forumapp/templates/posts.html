@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        
+        <title>Troop 44 Forum</title>
+        <<meta name="description" content="This is Django Template" >
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">  
+        
+    </head>
+    <body> 
+
+        <div id='wrapper'>
+            <div id='header'>
+                <a href="/"><img src="{% static 'img/logo.png' %}" alt="Troop 44" /></a>
+                <img id="mypic" src="{% static 'img/panzer.jpg' %}" alt="my-photo" />
+                <div class="form_box">
+                    {% if user.id != None %}
+                    <p>Welcome {{user.first_name}} {{user.last_name}}!</p>
+                    <a href="/update/{{user.id}}">Edit my Account</a>
+                    <form action="/logout" method='POST'>
+                        {% csrf_token %}
+                            <input type="submit" value="logout">             
+                    </form> 
+                    {% else %}  
+                    <p>You should never see this message</p>
+                    {% endif %}  
+                </div>
+            </div>
+        
+
+        {% if messages %}
+        {% for message in messages  %}
+            <p>{{message}}</p>
+        {% endfor %}
+        {% endif %}  
+
+        <div class="grid-container" >
+            <div class="item2">
+                <div class="form_box">
+                    <h3>Add a post!</h3>
+                    <form action="/addpost" method='POST'>
+                        {% csrf_token %}
+                        <label for="text">Text</label>
+                        <input type="text" name='text' id="text" />                        
+                        <input type="submit" value="Add post">                  
+                    </form>
+                </div>
+            </div>
+                    
+            <div class="item1">
+                {% if allposts %}
+                {% for post in allposts %}
+                <div class="box1">             
+                    {{ post.text }}
+                    <br>posted by: <a href="/view_user/{{post.user.id}}">{{post.user.first_name}}</a>
+                    <br>{{post.likes.count}} people like this
+                    {% if user in post.likes.all %}
+                    <br>You liked this post<br>
+                    {% else %}
+                    <form action="/addlike/{{post.id}}" method='POST'>
+                        {% csrf_token %}
+                            <input type="submit" value="like">             
+                    {% endif %}
+                    {% if quote.user.id == user.id %}
+                    <form action="/delete/{{post.id}}" method='POST'>
+                        {% csrf_token %}
+                            <input type="submit" value="delete">
+                    </form>
+                    {% endif %}
+                </div> 
+            </div>
+            {% endfor %}
+            {% endif %}
+            
+        </div>
+        
+    </body>
+</html>
