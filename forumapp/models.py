@@ -67,3 +67,11 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
     objects = UserManager()
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, related_name="comments", on_delete = models.CASCADE)
+    text =  models.TextField(blank=True)
+    post=models.ForeignKey(Post, related_name='comments',  on_delete = models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    objects = UserManager()
