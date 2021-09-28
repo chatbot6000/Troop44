@@ -5,7 +5,24 @@
     <meta charset="UTF-8" />
     <meta name="description" content="This is Django Template" >
         {% load static %}
-        <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">  
+        <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+        <script>
+            // Initialize and add the map
+            function initMap() {
+              // The location of Panzer
+                const troop44 = { lat: 48.688105, lng: 9.039320 };
+              // The map, centered at Troop44
+                const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 17,
+                center: troop44,
+                });
+              // The marker, positioned at Panzer
+                const marker = new google.maps.Marker({
+                position: troop44,
+                map: map,
+                });
+            }
+        </script>  
 </head>
 
 <body>
@@ -41,8 +58,14 @@
         </div>
 
         <div id='mainbody'>
-            <p>map goes here.
-            </p>
+            <p>Map to Troop 44.</p>
+            <!--The div element for the map -->
+            <div id="map"></div>
+            <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+            <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzVj-183QyH4g8heOxZPFOfGdv0sNjDhQ&callback=initMap&libraries=&v=weekly"
+            async>
+            </script>
         </div>
 
         <div id='footer'>
